@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    root: info
+
+info:
+  name: ${project.name}
+  description: ${project.description}
+  version: ${project.version}
+
+req-qa:
+  version: @project.version@
+  moduleName: req-qa
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, health, info, shutdown
+      cors:
+        allowed-origins: "*"
+        allowed-methods: OPTIONS, GET, POST
+        allowed-headers: "*"
+  endpoint:
+    shutdown:
+      enabled: false
+
+
+
