@@ -26,6 +26,8 @@ management:
   endpoint:
     shutdown:
       enabled: false
+taiga:
+  base-url: "http://localhost:8081"
 
 
 

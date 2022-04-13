@@ -26,6 +26,8 @@
 		<org.springframework.version>2.6.6</org.springframework.version>
 		<org.slf4j.api.version>1.7.25</org.slf4j.api.version>
 		<maven.jar.plugin.version>3.1.1</maven.jar.plugin.version>
+		<io.swagger.version>2.9.2</io.swagger.version>
+		<javax.validation.version>2.0.0.Final</javax.validation.version>
 
 		<main.basedir>${project.basedir}</main.basedir>
 
@@ -54,6 +56,25 @@
 				<artifactId>slf4j-api</artifactId>
 				<version>${org.slf4j.api.version}</version>
 			</dependency>
+
+			<!--Swagger dependencies-->
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${io.swagger.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger-ui</artifactId>
+				<version>${io.swagger.version}</version>
+			</dependency>
+			<!-- validators -->
+			<dependency>
+				<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>${javax.validation.version}</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 

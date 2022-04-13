@@ -11,6 +11,23 @@
 
     <artifactId>api-rest</artifactId>
     <dependencies>
+
+        <dependency>
+            <groupId>edu.upc.fib</groupId>
+            <artifactId>taiga-adapter</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

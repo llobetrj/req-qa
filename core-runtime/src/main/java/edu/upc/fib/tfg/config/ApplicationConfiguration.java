@@ -1,5 +1,6 @@
 package edu.upc.fib.tfg.config;
 
+import edu.upc.fib.tfg.config.taiga.TaigaConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -16,5 +17,7 @@ public class ApplicationConfiguration {
         return new ModuleProperties();
     }
 
-
+    @Bean
+    @ConfigurationProperties(prefix = "taiga")
+    public TaigaConfiguration getTaigaProperties() {return new TaigaConfiguration();}
 }
