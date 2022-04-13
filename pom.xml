@@ -19,7 +19,8 @@
 		<module>taiga-adapter</module>
 		<module>core-runtime</module>
         <module>api-rest</module>
-    </modules>
+		<module>core</module>
+	</modules>
 
 	<properties>
 		<java.version>11</java.version>
@@ -35,6 +36,11 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>edu.upc.fib</groupId>
+				<artifactId>core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>edu.upc.fib</groupId>
 				<artifactId>core-runtime</artifactId>

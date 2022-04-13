@@ -9,20 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>taiga-adapter</artifactId>
-
-    <dependencies>
-
-            <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <optional>true</optional>
-        </dependency>
-    </dependencies>
+    <artifactId>core</artifactId>
 
 </project>

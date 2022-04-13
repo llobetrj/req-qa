@@ -15,6 +15,10 @@
         <!-- Modules -->
         <dependency>
             <groupId>edu.upc.fib</groupId>
+            <artifactId>core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.upc.fib</groupId>
             <artifactId>api-rest</artifactId>
         </dependency>
         <dependency>

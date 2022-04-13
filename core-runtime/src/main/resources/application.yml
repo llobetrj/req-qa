@@ -27,7 +27,7 @@ management:
     shutdown:
       enabled: false
 taiga:
-  base-url: "http://localhost:8081"
-
+  baseUrl: "http://localhost:8081"
+  secret: "4002357aa9e2d26e83228b09cd050af84787e5e7"
 
 
