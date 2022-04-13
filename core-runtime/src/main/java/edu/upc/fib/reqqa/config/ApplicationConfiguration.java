@@ -1,4 +1,4 @@
-package edu.upc.fib.tfg.config;
+package edu.upc.fib.reqqa.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

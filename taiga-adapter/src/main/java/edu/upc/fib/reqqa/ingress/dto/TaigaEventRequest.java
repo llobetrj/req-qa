@@ -1,4 +1,4 @@
-package edu.upc.fib.tfg.ingress.dto;
+package edu.upc.fib.reqqa.ingress.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 

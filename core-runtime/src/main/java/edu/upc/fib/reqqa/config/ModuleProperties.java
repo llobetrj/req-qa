@@ -1,4 +1,4 @@
-package edu.upc.fib.tfg.config;
+package edu.upc.fib.reqqa.config;
 
 public class ModuleProperties {
     public ModuleProperties() {

@@ -1,4 +1,4 @@
-package edu.upc.fib.tfg.rest.dto;
+package edu.upc.fib.reqqa.rest.dto;
 
 public class Greeting {
 

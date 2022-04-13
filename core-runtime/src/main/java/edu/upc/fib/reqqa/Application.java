@@ -1,4 +1,4 @@
-package edu.upc.fib.tfg;
+package edu.upc.fib.reqqa;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
