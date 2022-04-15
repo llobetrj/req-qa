@@ -3,6 +3,7 @@ package edu.upc.fib.reqqa.rest.controller;
 import edu.upc.fib.reqqa.config.TaigaConfiguration;
 import edu.upc.fib.reqqa.ingress.dto.TaigaEventRequest;
 import edu.upc.fib.reqqa.rest.dto.Greeting;
+import edu.upc.fib.reqqa.rest.dto.RequirementsRequest;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -46,4 +47,17 @@ public class RequirementController {
         LOGGER.info("Received Taiga event {} at {}", taigaEventRequest.getAction(), taigaEventRequest.getDate());
         return ResponseEntity.ok("Received");
     }
+
+    @PostMapping("/analyze")
+    @ApiOperation(value = "Analyze requirements",
+            notes = "Notes",
+            response = String.class)
+    public ResponseEntity<String> analyzeRequirements(
+            @RequestBody RequirementsRequest requirementsRequest
+            ) {
+        LOGGER.info("Received request to be analyzed {}",requirementsRequest.getRequirements().toString());
+        return ResponseEntity.ok("Analyzed!");
+    }
+
+
 }

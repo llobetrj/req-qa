@@ -26,8 +26,12 @@ management:
   endpoint:
     shutdown:
       enabled: false
+
 taiga:
   baseUrl: "http://localhost:8081"
   secret: "4002357aa9e2d26e83228b09cd050af84787e5e7"
+
+open-req:
+  baseUrl: "http://localhost:9090"
 
 
