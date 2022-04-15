@@ -13,12 +13,6 @@
     <dependencies>
 
         <dependency>
-            <groupId>edu.upc.fib</groupId>
-            <artifactId>taiga-adapter</artifactId>
-        </dependency>
-
-
-        <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
         </dependency>
