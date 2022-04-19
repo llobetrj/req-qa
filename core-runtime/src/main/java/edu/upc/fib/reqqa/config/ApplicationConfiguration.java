@@ -30,8 +30,8 @@ public class ApplicationConfiguration {
 
     @Bean
     @ConfigurationProperties(prefix = "req-qa")
-    public ModuleProperties getModuleProperties() {
-        return new ModuleProperties();
+    public ApplicationProperties getApplicationProperties() {
+        return new ApplicationProperties();
     }
 
     @Bean

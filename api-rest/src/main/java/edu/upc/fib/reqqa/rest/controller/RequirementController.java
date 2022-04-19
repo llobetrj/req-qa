@@ -6,6 +6,7 @@ import edu.upc.fib.reqqa.domain.model.Requirement;
 import edu.upc.fib.reqqa.domain.model.RequirementAnalysis;
 import edu.upc.fib.reqqa.domain.service.RequirementAnalyzerService;
 import edu.upc.fib.reqqa.rest.dto.RequirementsRequest;
+import edu.upc.fib.reqqa.rest.mapper.RequirementMapperHelper;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +25,11 @@ public class RequirementController {
 
     private final RequirementAnalyzerService requirementAnalyzerService;
 
-    public RequirementController(@Autowired RequirementAnalyzerService requirementAnalyzerService) {
+    private final RequirementMapperHelper requirementMapperHelper;
+
+    public RequirementController(@Autowired RequirementAnalyzerService requirementAnalyzerService, @Autowired RequirementMapperHelper requirementMapperHelper) {
         this.requirementAnalyzerService = requirementAnalyzerService;
+        this.requirementMapperHelper = requirementMapperHelper;
     }
 
     @PostMapping("/analyze")
@@ -35,23 +39,15 @@ public class RequirementController {
     public ResponseEntity<String> analyzeRequirements(
             @RequestBody RequirementsRequest requirementsRequest
             ) {
+
         LOGGER.info("Received request to be analyzed {}",requirementsRequest.getRequirements().toString());
-        List<Requirement> requirementList = requirementsRequest.getRequirements().stream()
-                                            .map(requirementDto -> {
-                                                Requirement req = new Requirement(requirementDto.getId(),requirementDto.getText());
-                                                return req;
-                                            })
-                                            .collect(Collectors.toList());
-        List<RequirementAnalysis> requirementAnalysisList = requirementAnalyzerService.analyse(requirementList);
-        ObjectMapper mapper = new ObjectMapper();
-        String json = "";
-        try {
-            json = mapper.writeValueAsString(requirementAnalysisList);
-        } catch (JsonProcessingException e) {
-            LOGGER.error("Error parsing json {}",e.toString());
-        }
-        return ResponseEntity.ok(json);
+
+        List<RequirementAnalysis> requirementAnalysisList = requirementAnalyzerService.analyse(requirementMapperHelper.mapToRequirements(requirementsRequest));
+
+        return ResponseEntity.ok(requirementMapperHelper.mapToResponse(requirementAnalysisList));
     }
+
+
 
 
 }
