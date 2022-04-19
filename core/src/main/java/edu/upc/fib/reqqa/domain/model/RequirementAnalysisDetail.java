@@ -8,5 +8,8 @@ public class RequirementAnalysisDetail {
     private Integer index_end;
     private Integer index_start;
     private String category;
+    private String text;
+    private String language_construct;
+    private String title;
 
 }
