@@ -25,6 +25,10 @@
             <groupId>edu.upc.fib</groupId>
             <artifactId>taiga-adapter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>edu.upc.fib</groupId>
+            <artifactId>open-req-adapter</artifactId>
+        </dependency>
 
         <!--Spring-->
         <dependency>

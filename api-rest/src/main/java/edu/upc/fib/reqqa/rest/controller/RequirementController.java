@@ -1,33 +1,29 @@
 package edu.upc.fib.reqqa.rest.controller;
 
-import edu.upc.fib.reqqa.rest.dto.Greeting;
+import edu.upc.fib.reqqa.domain.model.Requirement;
+import edu.upc.fib.reqqa.domain.service.RequirementAnalyzerService;
 import edu.upc.fib.reqqa.rest.dto.RequirementsRequest;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class RequirementController {
     private static final Logger LOGGER = LoggerFactory.getLogger(RequirementController.class);
 
-    private static final String template = "Hello, %s!";
+    private final RequirementAnalyzerService requirementAnalyzerService;
 
-    public RequirementController() {
+    public RequirementController(@Autowired RequirementAnalyzerService requirementAnalyzerService) {
+        this.requirementAnalyzerService = requirementAnalyzerService;
     }
-
-    @GetMapping("/greeting")
-    public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
-        LOGGER.info("Received value {}",name);
-        return new Greeting(1, String.format(template, name));
-    }
-
-
 
     @PostMapping("/analyze")
     @ApiOperation(value = "Analyze requirements",
@@ -37,6 +33,13 @@ public class RequirementController {
             @RequestBody RequirementsRequest requirementsRequest
             ) {
         LOGGER.info("Received request to be analyzed {}",requirementsRequest.getRequirements().toString());
+        List<Requirement> requirementList = requirementsRequest.getRequirements().stream()
+                                            .map(requirementDto -> {
+                                                Requirement req = new Requirement(requirementDto.getId(),requirementDto.getText());
+                                                return req;
+                                            })
+                                            .collect(Collectors.toList());
+        requirementAnalyzerService.analyse(requirementList);
         return ResponseEntity.ok("Analyzed!");
     }
 

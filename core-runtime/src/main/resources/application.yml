@@ -32,6 +32,6 @@ taiga:
   secret: "4002357aa9e2d26e83228b09cd050af84787e5e7"
 
 open-req:
-  baseUrl: "http://localhost:9090"
-
+  baseUrl: "http://localhost:9799"
+  checkQuality: "/check-quality"
 

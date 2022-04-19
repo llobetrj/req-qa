@@ -17,12 +17,15 @@
 	<description>TFG spring boot application</description>
 	<modules>
 		<module>taiga-adapter</module>
+		<module>open-req-adapter</module>
+		<module>core</module>
 		<module>core-runtime</module>
         <module>api-rest</module>
-		<module>core</module>
-	</modules>
+    </modules>
 
 	<properties>
+		<main.basedir>${project.basedir}</main.basedir>
+
 		<java.version>11</java.version>
 		<org.springframework.version>2.6.6</org.springframework.version>
 		<org.slf4j.api.version>1.7.25</org.slf4j.api.version>
@@ -30,7 +33,8 @@
 		<io.swagger.version>2.9.2</io.swagger.version>
 		<javax.validation.version>2.0.0.Final</javax.validation.version>
 		<org.projectlombok.version>1.18.22</org.projectlombok.version>
-		<main.basedir>${project.basedir}</main.basedir>
+		<com.fasterxml.jackson.core.version>2.13.2.2</com.fasterxml.jackson.core.version>
+		<io.github-classgraph.version>4.8.143</io.github-classgraph.version>
 
 	</properties>
 
@@ -56,6 +60,11 @@
 				<artifactId>api-rest</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>edu.upc.fib</groupId>
+				<artifactId>open-req-adapter</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -74,6 +83,7 @@
 				<artifactId>springfox-swagger-ui</artifactId>
 				<version>${io.swagger.version}</version>
 			</dependency>
+
 			<!-- validators -->
 			<dependency>
 				<groupId>javax.validation</groupId>
@@ -82,9 +92,22 @@
 			</dependency>
 
 			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${com.fasterxml.jackson.core.version}</version>
+			</dependency>
+
+			<!-- utils -->
+			<dependency>
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok</artifactId>
 				<version>${org.projectlombok.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.github.classgraph</groupId>
+				<artifactId>classgraph</artifactId>
+				<version>${io.github-classgraph.version}</version>
 			</dependency>
 
 		</dependencies>
