@@ -19,4 +19,9 @@ public class ApplicationConfiguration {
     @Bean
     @ConfigurationProperties(prefix = "taiga")
     public TaigaConfiguration getTaigaProperties() {return new TaigaConfiguration();}
+
+    @Bean
+    @ConfigurationProperties(prefix = "open-req")
+    public OpenReqConfiguration getOpenReqProperties() {return new OpenReqConfiguration();}
+
 }

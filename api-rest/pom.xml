@@ -13,6 +13,11 @@
     <dependencies>
 
         <dependency>
+            <groupId>edu.upc.fib</groupId>
+            <artifactId>core</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
         </dependency>
