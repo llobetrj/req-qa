@@ -15,7 +15,7 @@ info:
 
 req-qa:
   version: @project.version@
-  moduleName: req-qa
+  name: req-qa
 
 management:
   endpoints:
