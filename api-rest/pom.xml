@@ -21,11 +21,14 @@
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
         </dependency>
+
+        <!-- Swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <optional>true</optional>
         </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

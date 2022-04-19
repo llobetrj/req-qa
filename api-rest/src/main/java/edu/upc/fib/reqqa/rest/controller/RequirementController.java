@@ -1,5 +1,7 @@
 package edu.upc.fib.reqqa.rest.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.upc.fib.reqqa.domain.model.Requirement;
 import edu.upc.fib.reqqa.domain.model.RequirementAnalysis;
 import edu.upc.fib.reqqa.domain.service.RequirementAnalyzerService;
@@ -41,7 +43,14 @@ public class RequirementController {
                                             })
                                             .collect(Collectors.toList());
         List<RequirementAnalysis> requirementAnalysisList = requirementAnalyzerService.analyse(requirementList);
-        return ResponseEntity.ok("Analyzed! {"+requirementAnalysisList.toString()+"}");
+        ObjectMapper mapper = new ObjectMapper();
+        String json = "";
+        try {
+            json = mapper.writeValueAsString(requirementAnalysisList);
+        } catch (JsonProcessingException e) {
+            LOGGER.error("Error parsing json {}",e.toString());
+        }
+        return ResponseEntity.ok(json);
     }
 
 
