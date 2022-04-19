@@ -1,6 +1,7 @@
 package edu.upc.fib.reqqa.rest.controller;
 
 import edu.upc.fib.reqqa.domain.model.Requirement;
+import edu.upc.fib.reqqa.domain.model.RequirementAnalysis;
 import edu.upc.fib.reqqa.domain.service.RequirementAnalyzerService;
 import edu.upc.fib.reqqa.rest.dto.RequirementsRequest;
 import io.swagger.annotations.ApiOperation;
@@ -39,8 +40,8 @@ public class RequirementController {
                                                 return req;
                                             })
                                             .collect(Collectors.toList());
-        requirementAnalyzerService.analyse(requirementList);
-        return ResponseEntity.ok("Analyzed!");
+        List<RequirementAnalysis> requirementAnalysisList = requirementAnalyzerService.analyse(requirementList);
+        return ResponseEntity.ok("Analyzed! {"+requirementAnalysisList.toString()+"}");
     }
 
 

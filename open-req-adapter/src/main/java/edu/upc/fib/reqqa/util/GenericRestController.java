@@ -38,10 +38,7 @@ public class GenericRestController <T> {
     public T sendRequest(String token)
     {
 
-        HttpComponentsClientHttpRequestFactory requestFactory =
-                new HttpComponentsClientHttpRequestFactory();
-
-        RestTemplate restTemplate = new RestTemplate(requestFactory);
+        RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -50,7 +47,7 @@ public class GenericRestController <T> {
         httpHeaders.set("Authorization", token);
 
         try {
-            HttpEntity h = new HttpEntity(objectToSend, httpHeaders);
+            HttpEntity<String> h = new HttpEntity<String>(objectToSend.toString(), httpHeaders);
             ResponseEntity<T> response = restTemplate.exchange(url, httpMethod, h, genericsType);
 
             if (response.getStatusCode() == HttpStatus.OK) {
