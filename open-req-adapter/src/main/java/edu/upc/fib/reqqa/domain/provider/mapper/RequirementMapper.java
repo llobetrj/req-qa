@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 public class RequirementMapper {
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final Logger LOGGER = LoggerFactory.getLogger(RequirementMapper.class);
 
     public String toJson(List<Requirement> requirementList) {
         ObjectMapper mapper = new ObjectMapper();

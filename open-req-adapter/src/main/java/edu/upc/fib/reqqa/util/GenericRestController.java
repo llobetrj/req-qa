@@ -21,7 +21,7 @@ public class GenericRestController <T> {
     private HttpMethod httpMethod;
     private Object objectToSend;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    private final Logger LOGGER = LoggerFactory.getLogger(GenericRestController.class);
 
     public void createRequest(Class<T> genericsType, String url, HttpMethod httpMethod, Object objectToSend) {
         this.genericsType = genericsType;

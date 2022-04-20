@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,10 +16,12 @@ import javax.validation.Valid;
 
 @RestController
 public class TaigaController {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(TaigaController.class);
 
     private final TaigaConfiguration taigaConfiguration;
 
+    @Autowired
     public TaigaController(TaigaConfiguration taigaConfiguration) {
         this.taigaConfiguration = taigaConfiguration;
     }

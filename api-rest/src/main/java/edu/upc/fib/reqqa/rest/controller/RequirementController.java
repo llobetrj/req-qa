@@ -1,8 +1,5 @@
 package edu.upc.fib.reqqa.rest.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.upc.fib.reqqa.domain.model.Requirement;
 import edu.upc.fib.reqqa.domain.model.RequirementAnalysis;
 import edu.upc.fib.reqqa.domain.service.RequirementAnalyzerService;
 import edu.upc.fib.reqqa.rest.dto.RequirementsRequest;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class RequirementController {
@@ -27,7 +23,8 @@ public class RequirementController {
 
     private final RequirementMapperHelper requirementMapperHelper;
 
-    public RequirementController(@Autowired RequirementAnalyzerService requirementAnalyzerService, @Autowired RequirementMapperHelper requirementMapperHelper) {
+    @Autowired
+    public RequirementController(RequirementAnalyzerService requirementAnalyzerService, RequirementMapperHelper requirementMapperHelper) {
         this.requirementAnalyzerService = requirementAnalyzerService;
         this.requirementMapperHelper = requirementMapperHelper;
     }

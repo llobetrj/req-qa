@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class RequirementMapperHelper {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RequirementController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RequirementMapperHelper.class);
 
     public String mapToResponse(List<RequirementAnalysis> requirementAnalysisList) {
         ObjectMapper mapper = new ObjectMapper();

@@ -1,8 +1,6 @@
 package edu.upc.fib.reqqa.domain.provider;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.upc.fib.reqqa.config.OpenReqConfiguration;
 import edu.upc.fib.reqqa.domain.model.Requirement;
 import edu.upc.fib.reqqa.domain.provider.mapper.RequirementMapper;
@@ -18,7 +16,8 @@ import java.util.List;
 
 @Component
 public class ImprovingRequirementQualityProvider {
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
+    private final Logger LOGGER = LoggerFactory.getLogger(ImprovingRequirementQualityProvider.class);
 
     private final OpenReqConfiguration openReqConfiguration;
 
@@ -26,7 +25,8 @@ public class ImprovingRequirementQualityProvider {
 
     private final RequirementMapper requirementMapper;
 
-    public ImprovingRequirementQualityProvider(@Autowired OpenReqConfiguration openReqConfiguration, @Autowired GenericRestController<JsonNode> serverCommunication, @Autowired RequirementMapper requirementMapper) {
+    @Autowired
+    public ImprovingRequirementQualityProvider(OpenReqConfiguration openReqConfiguration, GenericRestController<JsonNode> serverCommunication, RequirementMapper requirementMapper) {
         this.openReqConfiguration = openReqConfiguration;
         this.serverCommunication = serverCommunication;
         this.requirementMapper = requirementMapper;

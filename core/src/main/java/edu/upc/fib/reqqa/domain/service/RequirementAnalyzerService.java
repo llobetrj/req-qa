@@ -19,7 +19,8 @@ public class RequirementAnalyzerService {
 
     private final FactoryRequirementExternalService factoryRequirementExternalService;
 
-    public RequirementAnalyzerService(@Autowired FactoryRequirementExternalService factoryRequirementExternalService) {
+    @Autowired
+    public RequirementAnalyzerService(FactoryRequirementExternalService factoryRequirementExternalService) {
         this.factoryRequirementExternalService = factoryRequirementExternalService;
     }
 
