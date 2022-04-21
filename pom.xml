@@ -35,6 +35,7 @@
 		<org.projectlombok.version>1.18.22</org.projectlombok.version>
 		<com.fasterxml.jackson.core.version>2.13.2.2</com.fasterxml.jackson.core.version>
 		<io.github-classgraph.version>4.8.143</io.github-classgraph.version>
+		<org.json>20180130</org.json>
 
 	</properties>
 
@@ -108,6 +109,12 @@
 				<groupId>io.github.classgraph</groupId>
 				<artifactId>classgraph</artifactId>
 				<version>${io.github-classgraph.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>${org.json}</version>
 			</dependency>
 
 		</dependencies>

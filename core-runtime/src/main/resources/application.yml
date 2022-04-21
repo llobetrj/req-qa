@@ -5,6 +5,9 @@ server:
       enabled: false
 
 spring:
+  jackson:
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: true
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -36,8 +39,9 @@ management:
       enabled: false
 
 taiga:
-  baseUrl: "http://localhost:8081"
+  baseUrl: "http://localhost:9000"
   secret: "4002357aa9e2d26e83228b09cd050af84787e5e7"
+  customFieldName: "quality"
 
 open-req:
   baseUrl: "http://localhost:9799"
