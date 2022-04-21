@@ -6,5 +6,6 @@ import lombok.Data;
 public class TaigaConfiguration {
     private String baseUrl;
     private String secret;
+    private String customFieldName;
 
 }
