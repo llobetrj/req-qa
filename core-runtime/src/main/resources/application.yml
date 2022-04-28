@@ -42,6 +42,9 @@ taiga:
   baseUrl: "http://localhost:9000"
   secret: "4002357aa9e2d26e83228b09cd050af84787e5e7"
   customFieldName: "quality"
+  username: "admin"
+  password: "admin"
+  granType: "password"
 
 open-req:
   baseUrl: "http://localhost:9799"

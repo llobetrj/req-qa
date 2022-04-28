@@ -26,6 +26,8 @@ public class TaigaSenderService {
 
     public static final String ISSUES_CUSTOM_ATTRIBUTES_VALUES = "/api/v1/issues/custom-attributes-values/";
     public static final String ISSUE_CUSTOM_ATTRIBUTES = "/api/v1/issue-custom-attributes";
+    public static final String API_AUTH = "/api/v1/auth";
+    public String token = "";
 
     private final TaigaConfiguration taigaConfiguration;
 
@@ -35,6 +37,10 @@ public class TaigaSenderService {
     }
 
     public void updateTaigaIssue(String id, List<RequirementAnalysis> requirementAnalysisList) {
+
+        // Get token to connect to Taiga API
+        token = getTokenFromTaiga();
+
         String customFieldId = getCustomFieldId(taigaConfiguration.getCustomFieldName());
 
         // get custom_field version from the issue by the id retrieved from previous from atributes_values field
@@ -75,7 +81,7 @@ public class TaigaSenderService {
                 .uri(URI.create(taigaUrl))
                 .method(HttpMethod.PATCH.toString(), HttpRequest.BodyPublishers.ofString(jsonString))
                 .header("Content-Type", "application/json")
-                .header("Authorization","Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUwNTYzNjAxLCJqdGkiOiJlY2FiMDNmY2E5Mzg0ZTA3YWI3NTJlYjk0Yzc4NjdkYSIsInVzZXJfaWQiOjV9.ARWlV_JEO1DuwWUSgDlm0lw624x1R9dhYbeDVaRu_pE")
+                .header("Authorization",token)
                 .build();
 
        sendRequest(request);
@@ -89,7 +95,7 @@ public class TaigaSenderService {
                 .uri(URI.create(uri))
                 .GET()
                 .header("Content-Type", "application/json")
-                .header("Authorization","Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUwNTYzNjAxLCJqdGkiOiJlY2FiMDNmY2E5Mzg0ZTA3YWI3NTJlYjk0Yzc4NjdkYSIsInVzZXJfaWQiOjV9.ARWlV_JEO1DuwWUSgDlm0lw624x1R9dhYbeDVaRu_pE")
+                .header("Authorization", token)
                 .build();
 
         HttpResponse<String> response = sendRequest(request);
@@ -106,13 +112,32 @@ public class TaigaSenderService {
         return customFieldId;
     }
 
+    private String getTokenFromTaiga()  {
+        JSONObject jsonRequest = new JSONObject();
+
+        jsonRequest.put("username",taigaConfiguration.getUsername());
+        jsonRequest.put("password", taigaConfiguration.getPassword());
+        jsonRequest.put("type", "normal");
+
+        String jsonString = jsonRequest.toString();
+        String uri = taigaConfiguration.getBaseUrl() + API_AUTH;
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(uri))
+                .POST(HttpRequest.BodyPublishers.ofString(jsonString))
+                .header("Content-Type", "application/json")
+                .build();
+        HttpResponse<String> response = sendRequest(request);
+        JSONObject res = new JSONObject(response.body());
+        return "Bearer "+res.get("auth_token").toString();
+    }
+
     private String getVersion(String issueId) {
         String uri = taigaConfiguration.getBaseUrl()+ TaigaSenderService.ISSUES_CUSTOM_ATTRIBUTES_VALUES +issueId;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(uri))
                 .GET()
                 .header("Content-Type", "application/json")
-                .header("Authorization","Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjUwNTYzNjAxLCJqdGkiOiJlY2FiMDNmY2E5Mzg0ZTA3YWI3NTJlYjk0Yzc4NjdkYSIsInVzZXJfaWQiOjV9.ARWlV_JEO1DuwWUSgDlm0lw624x1R9dhYbeDVaRu_pE")
+                .header("Authorization",token)
                 .build();
 
         HttpResponse<String> response = sendRequest(request);
