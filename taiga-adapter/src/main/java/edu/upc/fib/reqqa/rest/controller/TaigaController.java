@@ -1,10 +1,12 @@
 package edu.upc.fib.reqqa.rest.controller;
 
 import edu.upc.fib.reqqa.config.TaigaConfiguration;
+import edu.upc.fib.reqqa.domain.model.Requirement;
 import edu.upc.fib.reqqa.domain.model.RequirementAnalysis;
 import edu.upc.fib.reqqa.domain.service.TaigaEventReceivedService;
 import edu.upc.fib.reqqa.domain.service.TaigaSenderService;
 import edu.upc.fib.reqqa.ingress.dto.TaigaEventRequest;
+import edu.upc.fib.reqqa.rest.controller.mapper.TaigaEventMapper;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -28,11 +30,14 @@ public class TaigaController {
 
     private final TaigaSenderService taigaSenderService;
 
+    private final TaigaEventMapper taigaEventMapper;
+
     @Autowired
-    public TaigaController(TaigaConfiguration taigaConfiguration, TaigaEventReceivedService taigaEventReceivedService, TaigaSenderService taigaSenderService) {
+    public TaigaController(TaigaConfiguration taigaConfiguration, TaigaEventReceivedService taigaEventReceivedService, TaigaSenderService taigaSenderService, TaigaEventMapper taigaEventMapper) {
         this.taigaConfiguration = taigaConfiguration;
         this.taigaEventReceivedService = taigaEventReceivedService;
         this.taigaSenderService = taigaSenderService;
+        this.taigaEventMapper = taigaEventMapper;
     }
 
     @PostMapping("/taiga/webhook")
@@ -48,10 +53,10 @@ public class TaigaController {
                                 , taigaEventRequest.getData().toString());
 
         // destination field taigaEventRequest.getData().getCustom_attributes_values().get("quality")
-
-        List<RequirementAnalysis> requirementAnalysisList = taigaEventReceivedService.process(taigaEventRequest);
+        List<Requirement> requirementList = taigaEventMapper.toRequirements(taigaEventRequest);
+        List<RequirementAnalysis> requirementAnalysisList = taigaEventReceivedService.process(taigaEventRequest, requirementList);
         if (requirementAnalysisList != null) {
-            taigaSenderService.updateTaigaIssue(taigaEventRequest.getData().getId(), requirementAnalysisList);
+            taigaSenderService.updateTaigaIssue(taigaEventRequest.getData().getId(), requirementList.get(0), requirementAnalysisList);
         }
         return ResponseEntity.ok("Received");
     }

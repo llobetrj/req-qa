@@ -26,7 +26,7 @@ public class TaigaEventReceivedService {
         this.requirementAnalyzerService = requirementAnalyzerService;
     }
 
-    public List<RequirementAnalysis> process(TaigaEventRequest taigaEventRequest) {
+    public List<RequirementAnalysis> process(TaigaEventRequest taigaEventRequest, List<Requirement> requirementList) {
         if (!taigaEventRequest.getType().equals(ISSUE)) {
             LOGGER.info("Taiga event with id {} is not a issue, discarded.", taigaEventRequest.getBy().getId());
             return null;
@@ -34,10 +34,7 @@ public class TaigaEventReceivedService {
         // do staff
         LOGGER.info("Processing Taiga event with id {}...", taigaEventRequest.getData().getId());
 
-        // assuming one request from taiga event
-        Requirement requirement = new Requirement(taigaEventRequest.getData().getId(), taigaEventRequest.getData().getDescription());
-        List<Requirement> requirementList = new ArrayList<>();
-        requirementList.add(requirement);
+
 
         List<RequirementAnalysis> requirementAnalysisList = requirementAnalyzerService.analyse(requirementList);
         LOGGER.info("Analyed result from reqqa core {}", requirementAnalysisList.toString());

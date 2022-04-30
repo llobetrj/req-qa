@@ -2,10 +2,10 @@ package edu.upc.fib.reqqa.domain.provider.mapper;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.upc.fib.reqqa.domain.model.Categories;
 import edu.upc.fib.reqqa.domain.model.Requirement;
 import edu.upc.fib.reqqa.domain.model.RequirementAnalysis;
 import edu.upc.fib.reqqa.domain.model.RequirementAnalysisDetail;
-import edu.upc.fib.reqqa.domain.service.ImprovingRequirementQualityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -47,7 +47,7 @@ public class RequirementAnalysisMapper {
                         LOGGER.debug("Retrieve detailed value from openReq check-quality: " + j.toString());
                         try {
                             RequirementAnalysisDetail i = mapper.readValue(j.toString(), RequirementAnalysisDetail.class);
-
+                            i.setCategory(Categories.AMBIGUITY);
                             Optional<RequirementAnalysisDetail> oImp = requirementAnalysisDetails.stream().filter(im -> im.getIndex_end() >= i.getIndex_start()).findFirst();
                             if (oImp.isEmpty()) {
 
