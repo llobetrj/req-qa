@@ -4,4 +4,4 @@ stages:
 build:
     stage: build
     script:
-        mvn package -U
+        - mvn package -U
