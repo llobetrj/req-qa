@@ -1,8 +1,9 @@
 package edu.upc.fib.reqqa.domain.service;
 
 import edu.upc.fib.reqqa.config.TaigaConfiguration;
+import edu.upc.fib.reqqa.domain.model.Requirement;
 import edu.upc.fib.reqqa.domain.model.RequirementAnalysis;
-import edu.upc.fib.reqqa.domain.model.RequirementAnalysisDetail;
+import edu.upc.fib.reqqa.egress.FormatDisplayAnalysisResult;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -10,14 +11,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -31,12 +29,15 @@ public class TaigaSenderService {
 
     private final TaigaConfiguration taigaConfiguration;
 
+    private final FormatDisplayAnalysisResult formatDisplayAnalysisResult;
+
     @Autowired
-    public TaigaSenderService(TaigaConfiguration taigaConfiguration) {
+    public TaigaSenderService(TaigaConfiguration taigaConfiguration, FormatDisplayAnalysisResult formatDisplayAnalysisResult) {
         this.taigaConfiguration = taigaConfiguration;
+        this.formatDisplayAnalysisResult = formatDisplayAnalysisResult;
     }
 
-    public void updateTaigaIssue(String id, List<RequirementAnalysis> requirementAnalysisList) {
+    public void updateTaigaIssue(String id, Requirement requirement, List<RequirementAnalysis> requirementAnalysisList) {
 
         // Get token to connect to Taiga API
         token = getTokenFromTaiga();
@@ -47,21 +48,11 @@ public class TaigaSenderService {
         String version = getVersion(id);
 
         // prepare value to send
-        // TODO Use a mapper
-        List<String> values = new ArrayList<>();
-        requirementAnalysisList.forEach(elem -> {
-            // assume all are from the same id
-            if (id.equals(elem.getId())) {
-                List<RequirementAnalysisDetail> reqDetail = elem.getRequirementAnalysisDetailList();
-                reqDetail.forEach(detail -> {
-                    values.add(detail.toString());
-                });
-
-            }
-        });
-        String value = StringUtils.collectionToDelimitedString(Collections.singletonList(values),"\n");
+        String value = formatDisplayAnalysisResult.getDisplayAnalysisResults(id, requirement, requirementAnalysisList);
         updateCustomField(id, customFieldId, version, value);
     }
+
+
 
     private void updateCustomField(String issueId, String customFieldId, String version, String value) {
         HttpResponse<String> response;
@@ -72,6 +63,7 @@ public class TaigaSenderService {
         JSONObject jsonRequest = new JSONObject();
         JSONObject jsonAttribute = new JSONObject();
         jsonAttribute.put(customFieldId,value);
+        LOGGER.info("Sending value {}",value);
 
         jsonRequest.put("attributes_values",jsonAttribute);
         jsonRequest.put("version", version);
