@@ -35,7 +35,12 @@
 		<org.projectlombok.version>1.18.22</org.projectlombok.version>
 		<com.fasterxml.jackson.core.version>2.13.2.2</com.fasterxml.jackson.core.version>
 		<io.github-classgraph.version>4.8.143</io.github-classgraph.version>
-		<org.json>20180130</org.json>
+		<org.json>20200518</org.json>
+		<junit.version>3.8.2</junit.version>
+		<jupiter.version>5.8.1</jupiter.version>
+		<mockito.version>4.0.0</mockito.version>
+		<mockito.jupiter.version>4.0.0</mockito.jupiter.version>
+		<assertj.version>3.12.2</assertj.version>
 
 	</properties>
 
@@ -117,6 +122,37 @@
 				<version>${org.json}</version>
 			</dependency>
 
+			<!-- test -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.assertj</groupId>
+				<artifactId>assertj-core</artifactId>
+				<version>${assertj.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-engine</artifactId>
+				<version>${jupiter.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>${mockito.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-junit-jupiter</artifactId>
+				<version>${mockito.jupiter.version}</version>
+				<scope>test</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

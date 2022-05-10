@@ -4,9 +4,12 @@ import edu.upc.fib.reqqa.domain.model.Categories;
 import edu.upc.fib.reqqa.domain.model.Requirement;
 import edu.upc.fib.reqqa.domain.model.RequirementAnalysis;
 import edu.upc.fib.reqqa.domain.model.RequirementAnalysisDetail;
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,7 +41,7 @@ public class FormatDisplayAnalysisResult {
                     ambiWords.merge(analysis.getText()+"#"+analysis.getIndex_start()+"#"+analysis.getIndex_end(), analysis.getTitle(), (a, b) -> a + "," + b);
                     String context = getContext(requirement, analysis);
                     ambiWordsContext.putIfAbsent(analysis.getText(), context);
-                }
+               }
             });
         });
 
@@ -59,13 +62,18 @@ public class FormatDisplayAnalysisResult {
         });
         values.add("");
 
+        values.add("Requirement: "+ getRequirementTextDisplay(requirement, requirementAnalysisList));
+        // recorrer caracter a caracter
+        // por cada caracter, mirar la posicion
+        // si coincide con alguna entonces poner un inline link
+        // [text](# category "category")
+
 
         requirementAnalysisList.forEach(elem -> {
             // assume all are from the same id
             if (id.equals(elem.getId())) {
                 List<RequirementAnalysisDetail> reqDetail = elem.getRequirementAnalysisDetailList();
                 reqDetail.forEach(detail -> {
-                    values.add("Requirement: "+ requirement.getText());
                     values.add("## "+detail.getTitle());
                     values.add("### "+detail.getLanguage_construct());
                     values.add("* "+detail.getDescription());
@@ -78,6 +86,57 @@ public class FormatDisplayAnalysisResult {
         });
         String value = StringUtils.collectionToDelimitedString(values,"\n");
         return value;
+    }
+
+    protected String getRequirementTextDisplay(Requirement requirement, List<RequirementAnalysis> requirementAnalysisList) {
+        String reqText = requirement.getText();
+        StringBuilder reqFormatted = new StringBuilder();
+
+        CharacterIterator it = new StringCharacterIterator(reqText);
+
+        while (it.current() != CharacterIterator.DONE)
+        {
+            formatIfHasAnalysis(requirementAnalysisList, reqFormatted, it);
+            reqFormatted.append(it.current());
+            it.next();
+        }
+        return reqFormatted.toString();
+    }
+
+    private void formatIfHasAnalysis(List<RequirementAnalysis> requirementAnalysisList, StringBuilder reqFormatted, CharacterIterator it) {
+        JSONObject aux = getAnalysisBelongsToIndex(it.getIndex(), requirementAnalysisList);
+        if (aux.has("Title")) {
+            reqFormatted.append("[");
+            // loop until reach end index
+            while (it.getIndex() != (int) aux.get("Index_end")) {
+                reqFormatted.append(it.current());
+                it.next();
+            }
+            // Add inline link as markdown
+            reqFormatted.append("](#")
+                    .append(aux.get("Title"))
+                    .append(" ")
+                    .append("\"")
+                    .append(aux.get("Title"))
+                    .append("\"")
+                    .append(")");
+        }
+    }
+
+    private JSONObject getAnalysisBelongsToIndex(int index, List<RequirementAnalysis> requirementAnalysisList) {
+        JSONObject retJson = new JSONObject();
+
+        requirementAnalysisList.forEach(requirementAnalysis -> {
+            requirementAnalysis.getRequirementAnalysisDetailList().forEach(analysis -> {
+                if (analysis.getCategory().equals(Categories.AMBIGUITY) &&
+                    index == analysis.getIndex_start()) {
+                    retJson.put("Title",analysis.getTitle());
+                    retJson.put("Index_end", analysis.getIndex_end());
+                }
+            });
+        });
+
+        return retJson;
     }
 
     private String getContext(Requirement requirement, RequirementAnalysisDetail analysis) {
