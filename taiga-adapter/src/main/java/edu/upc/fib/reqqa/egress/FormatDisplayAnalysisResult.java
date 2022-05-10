@@ -45,13 +45,14 @@ public class FormatDisplayAnalysisResult {
             });
         });
 
-        // Create table of all ambiguities
-        values.add("| **Ambiguity** | **Description** |");
-        values.add("| --- | --- |");
-        ambiguities.forEach((key,value) -> values.add("|**"+key+"**|"+value+"|"));
+
+
+        values.add("#### Annotated requirement");
+        values.add(getRequirementTextDisplay(requirement, requirementAnalysisList));
         values.add("");
 
         // Create table of texts
+        values.add("#### Ambiguities found");
         values.add("| **Text** | **Context** | **Ambiguities** |");
         values.add("| --- | --- | --- |");
         ambiWords.forEach((key,value) ->
@@ -62,14 +63,16 @@ public class FormatDisplayAnalysisResult {
         });
         values.add("");
 
-        values.add("Requirement: "+ getRequirementTextDisplay(requirement, requirementAnalysisList));
-        // recorrer caracter a caracter
-        // por cada caracter, mirar la posicion
-        // si coincide con alguna entonces poner un inline link
-        // [text](# category "category")
+        values.add("* * *");
+        values.add("#### Ambiguities descriptions");
+        // Create table of all ambiguities
+        values.add("| **Ambiguity** | **Description** |");
+        values.add("| --- | --- |");
+        ambiguities.forEach((key,value) -> values.add("|**"+key+"**|"+value+"|"));
+        values.add("");
 
 
-        requirementAnalysisList.forEach(elem -> {
+/*        requirementAnalysisList.forEach(elem -> {
             // assume all are from the same id
             if (id.equals(elem.getId())) {
                 List<RequirementAnalysisDetail> reqDetail = elem.getRequirementAnalysisDetailList();
@@ -83,7 +86,7 @@ public class FormatDisplayAnalysisResult {
                 });
 
             }
-        });
+        });*/
         String value = StringUtils.collectionToDelimitedString(values,"\n");
         return value;
     }
