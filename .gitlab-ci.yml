@@ -1,4 +1,7 @@
+stages:
+    - build
+
 build:
-  stage: build
-  script:
-    - mvn package -U
+    stage: build
+    script:
+        - mvn package -U
