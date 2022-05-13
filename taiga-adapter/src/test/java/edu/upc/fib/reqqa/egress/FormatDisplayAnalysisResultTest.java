@@ -45,19 +45,19 @@ public class FormatDisplayAnalysisResultTest implements WithAssertions {
         requirementAnalysisList.add(requirementAnalysis);
         String result = formatDisplayAnalysisResult.getDisplayAnalysisResults("1",requirement, requirementAnalysisList);
 
-        String resultExpected = "| **Ambiguity** | **Description** |\n" +
-                "| --- | --- |\n" +
-                "|**Vague**|desc|\n" +
+        String resultExpected = "#### Annotated requirement\n" +
+                "This [is](#Vague \"Vague\") a requirement\n" +
                 "\n" +
+                "#### Ambiguities found\n" +
                 "| **Text** | **Context** | **Ambiguities** |\n" +
                 "| --- | --- | --- |\n" +
                 "|**is**|... is a...|Vague|\n" +
                 "\n" +
-                "Requirement: This [is](#Vague \"Vague\") a requirement\n" +
-                "## Vague\n" +
-                "### Vague language\n" +
-                "* desc\n" +
-                "* **is**";
+                "* * *\n" +
+                "#### Ambiguities descriptions\n" +
+                "| **Ambiguity** | **Description** |\n" +
+                "| --- | --- |\n" +
+                "|**Vague**|desc|\n";
 
 
         assertThat(result).isEqualTo(resultExpected);
