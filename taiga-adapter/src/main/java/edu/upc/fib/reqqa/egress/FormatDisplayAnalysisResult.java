@@ -117,7 +117,7 @@ public class FormatDisplayAnalysisResult {
             }
             // Add inline link as markdown
             reqFormatted.append("](#")
-                    .append(aux.get("Title"))
+                    .append(StringUtils.replace(aux.getString("Title")," ",""))
                     .append(" ")
                     .append("\"")
                     .append(aux.get("Title"))
