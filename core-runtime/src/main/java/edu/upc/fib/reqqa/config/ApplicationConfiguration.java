@@ -39,7 +39,7 @@ public class ApplicationConfiguration {
     public TaigaConfiguration getTaigaProperties() {return new TaigaConfiguration();}
 
     @Bean
-    @ConfigurationProperties(prefix = "open-req")
+    @ConfigurationProperties(prefix = "openreq")
     public OpenReqConfiguration getOpenReqProperties() {return new OpenReqConfiguration();}
 
     // swagger hack

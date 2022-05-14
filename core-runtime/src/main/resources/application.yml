@@ -46,6 +46,6 @@ taiga:
   password: "admin"
   granType: "password"
 
-open-req:
+openreq:
   baseUrl: "http://localhost:9799"
   checkQuality: "/check-quality"
