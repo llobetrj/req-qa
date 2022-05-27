@@ -12,7 +12,7 @@ import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 @Component
@@ -28,24 +28,29 @@ public class FormatDisplayAnalysisResult {
                 return "No defects found!";
             }
         }
-        HashMap<String,String> ambiWords = new HashMap<>();
-        HashMap<String,String> ambiWordsContext = new HashMap<>();
 
+        List<JSONObject> ambiWords = new ArrayList<>();
         List<String> values = new ArrayList<>();
         // get all ambiguities
-        HashMap<String,String> ambiguities = new HashMap<>();
+        LinkedHashSet<String> ambiguities = new LinkedHashSet<>();
+
         requirementAnalysisList.forEach(requirementAnalysis -> {
             requirementAnalysis.getRequirementAnalysisDetailList().forEach(analysis -> {
                 if (analysis.getCategory().equals(Categories.AMBIGUITY)) {
-                    ambiguities.put(analysis.getTitle(), analysis.getDescription());
-                    ambiWords.merge(analysis.getText()+"#"+analysis.getIndex_start()+"#"+analysis.getIndex_end(), analysis.getTitle(), (a, b) -> a + "," + b);
-                    String context = getContext(requirement, analysis);
-                    ambiWordsContext.putIfAbsent(analysis.getText(), context);
+
+                    JSONObject jsonElem = new JSONObject();
+                    jsonElem.put("title", analysis.getTitle());
+                    jsonElem.put("description", analysis.getDescription());
+                    ambiguities.add(jsonElem.toString());
+
+                    jsonElem = new JSONObject();
+                    jsonElem.put("text",analysis.getText());
+                    jsonElem.put("title",analysis.getTitle());
+                    jsonElem.put("context",getContext(requirement, analysis));
+                    ambiWords.add(jsonElem);
                }
             });
         });
-
-
 
         values.add("#### Annotated requirement");
         values.add(getRequirementTextDisplay(requirement, requirementAnalysisList));
@@ -55,40 +60,35 @@ public class FormatDisplayAnalysisResult {
         values.add("#### Ambiguities found");
         values.add("| **Text** | **Context** | **Ambiguities** |");
         values.add("| --- | --- | --- |");
-        ambiWords.forEach((key,value) ->
+        ambiWords.forEach(elem ->
         {
-            String[] arrTrueKey = key.split("#");
-            String trueKey = Arrays.stream(arrTrueKey).findFirst().orElse("");
-            values.add("|**"+trueKey+"**|"+ambiWordsContext.get(trueKey)+"|"+value+"|");
+            values.add("|**" +
+                        elem.getString("text") +
+                        "**|" +
+                        elem.getString("context") +
+                        "|" +
+                        elem.getString("title") +
+                        "|");
         });
         values.add("");
 
+        // add a separator
         values.add("* * *");
         values.add("#### Ambiguities descriptions");
         // Create table of all ambiguities
         values.add("| **Ambiguity** | **Description** |");
         values.add("| --- | --- |");
-        ambiguities.forEach((key,value) -> values.add("|**"+key+"**|"+value+"|"));
+        ambiguities.forEach(elem -> {
+            JSONObject jsonElem = new JSONObject(elem);
+            values.add("|**" +
+                        jsonElem.getString("title") +
+                        "**|" +
+                        jsonElem.getString("description") +
+                        "|");
+        });
         values.add("");
 
-
-/*        requirementAnalysisList.forEach(elem -> {
-            // assume all are from the same id
-            if (id.equals(elem.getId())) {
-                List<RequirementAnalysisDetail> reqDetail = elem.getRequirementAnalysisDetailList();
-                reqDetail.forEach(detail -> {
-                    values.add("## "+detail.getTitle());
-                    values.add("### "+detail.getLanguage_construct());
-                    values.add("* "+detail.getDescription());
-                    values.add("* **"+detail.getText()+"**");
-
-                    //values.add(detail.toString());
-                });
-
-            }
-        });*/
-        String value = StringUtils.collectionToDelimitedString(values,"\n");
-        return value;
+        return StringUtils.collectionToDelimitedString(values,"\n");
     }
 
     protected String getRequirementTextDisplay(Requirement requirement, List<RequirementAnalysis> requirementAnalysisList) {
@@ -167,7 +167,6 @@ public class FormatDisplayAnalysisResult {
         String [] textLettered = Arrays.copyOfRange(textDisplayLettered, from, to);
         textToDisplay = Arrays.stream(textLettered).reduce("",
                 (partial, element) -> partial + " " + element);
-        String context = "..."+textToDisplay+"...";
-        return context;
+        return "..."+textToDisplay+"...";
     }
 }

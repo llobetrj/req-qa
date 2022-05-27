@@ -90,5 +90,59 @@ public class FormatDisplayAnalysisResultTest implements WithAssertions {
         assertThat(result).isEqualTo(resultExpected);
     }
 
+    @Test
+    public void TestOrderDisplay() {
+        String id = "1";
+        String reqTest = "This is all the requirement";
+        Requirement requirement = new Requirement(id,reqTest);
+        RequirementAnalysis requirementAnalysis = new RequirementAnalysis();
+
+        RequirementAnalysisDetail requirementAnalysisDetail = new RequirementAnalysisDetail();
+        requirementAnalysisDetail.setText("is");
+        requirementAnalysisDetail.setTitle("Vague");
+        requirementAnalysisDetail.setCategory(Categories.AMBIGUITY);
+        requirementAnalysisDetail.setDescription("desc");
+        requirementAnalysisDetail.setIndex_start(5);
+        requirementAnalysisDetail.setIndex_end(7);
+        requirementAnalysisDetail.setLanguage_construct("Vague language");
+
+        List<RequirementAnalysisDetail> requirementAnalysisDetailList = new ArrayList<>(Collections.emptyList());
+        requirementAnalysisDetailList.add(requirementAnalysisDetail);
+
+        requirementAnalysisDetail = new RequirementAnalysisDetail();
+        requirementAnalysisDetail.setText("all");
+        requirementAnalysisDetail.setTitle("Dangerous Plural");
+        requirementAnalysisDetail.setCategory(Categories.AMBIGUITY);
+        requirementAnalysisDetail.setDescription("desc");
+        requirementAnalysisDetail.setIndex_start(8);
+        requirementAnalysisDetail.setIndex_end(11);
+        requirementAnalysisDetail.setLanguage_construct("Dangerous Plural");
+        requirementAnalysisDetailList.add(requirementAnalysisDetail);
+
+        requirementAnalysis.setRequirementAnalysisDetailList(requirementAnalysisDetailList);
+        requirementAnalysis.setId(id);
+        List<RequirementAnalysis> requirementAnalysisList = new ArrayList<>(Collections.emptyList());
+        requirementAnalysisList.add(requirementAnalysis);
+        String result = formatDisplayAnalysisResult.getDisplayAnalysisResults("1",requirement, requirementAnalysisList);
+
+        String resultExpected = "#### Annotated requirement\n" +
+                "This [is](#Vague \"Vague\") [all](#DangerousPlural \"Dangerous Plural\") the requirement\n" +
+                "\n" +
+                "#### Ambiguities found\n" +
+                "| **Text** | **Context** | **Ambiguities** |\n" +
+                "| --- | --- | --- |\n" +
+                "|**is**|... is all the...|Vague|\n" +
+                "|**all**|... is all the...|Dangerous Plural|\n" +
+                "\n" +
+                "* * *\n" +
+                "#### Ambiguities descriptions\n" +
+                "| **Ambiguity** | **Description** |\n" +
+                "| --- | --- |\n" +
+                "|**Vague**|desc|\n" +
+                "|**Dangerous Plural**|desc|\n";
+
+
+        assertThat(result).isEqualTo(resultExpected);
+    }
 
 }
