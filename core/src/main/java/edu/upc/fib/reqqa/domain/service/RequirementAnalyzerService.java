@@ -27,7 +27,7 @@ public class RequirementAnalyzerService {
     public List<RequirementAnalysis> analyse(List<Requirement> requirementList) {
         List<RequirementAnalysis> requirementAnalysisList = new ArrayList<>();
         for (RequirementExternalService reqExternalService : factoryRequirementExternalService.getImplementationMap().values()) {
-            LOGGER.info("class: {}", reqExternalService.toString());
+            LOGGER.debug("class: {}", reqExternalService.toString());
             requirementAnalysisList.addAll(((IRequirementExternalService) reqExternalService).getRequirementAnalysis(requirementList));
         }
         return requirementAnalysisList;
