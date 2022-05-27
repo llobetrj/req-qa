@@ -15,6 +15,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.OptionalInt;
+import java.util.stream.IntStream;
 
 @Component
 public class RequirementAnalysisMapper {
@@ -48,12 +50,18 @@ public class RequirementAnalysisMapper {
                         try {
                             RequirementAnalysisDetail i = mapper.readValue(j.toString(), RequirementAnalysisDetail.class);
                             i.setCategory(Categories.AMBIGUITY);
-                            Optional<RequirementAnalysisDetail> oImp = requirementAnalysisDetails.stream().filter(im -> im.getIndex_end() >= i.getIndex_start()).findFirst();
-                            if (oImp.isEmpty()) {
 
-                                requirementAnalysisDetails.add(i);
-
+                            // find position to rearrange
+                            OptionalInt indexOpt = IntStream.range(0, requirementAnalysisDetails.size())
+                                    .filter(item -> i.getIndex_start() < requirementAnalysisDetails.get(item).getIndex_start())
+                                    .findFirst();
+                            if (indexOpt.isPresent()) {
+                                requirementAnalysisDetails.add(indexOpt.getAsInt(),i);
                             }
+                            else {
+                                requirementAnalysisDetails.add(i);
+                            }
+
                         } catch (Exception e) {
                             LOGGER.error("Error parsing json {}",e.toString());
                         }
