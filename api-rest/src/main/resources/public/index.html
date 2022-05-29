@@ -11,6 +11,16 @@
 
     <script type="text/javascript" src="js/bootstrap-filestyle.min.js"> </script>
 
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/tippy.js@6/animations/scale.css"
+    />
+    <style>
+        .tippy-box[data-theme~='customblack'] {
+            color:black;
+            background-color: #F8F8F6FF;
+        }
+    </style>
 </head>
 <body id="body">
     <h1>Select a CSV file to analyze</h1>
@@ -26,5 +36,25 @@
     </form>
     <div id="ambiguity-counts" class="col-xs-12">
     </div>
+
+    <!-- Tippy tooltip -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.find,Promise,Object.assign"></script>
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+    <!--
+    <script>
+        tippy('.tippy-tooltip', {
+            content(reference) {
+                const id = reference.getAttribute('data-template');
+                if (id) {
+                    const template = document.getElementById(id);
+                    return template.innerHTML;
+                }
+                return null;
+            },
+            allowHTML: true,
+        });
+    </script>
+    -->
 </body>
 </html>

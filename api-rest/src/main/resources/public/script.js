@@ -65,11 +65,12 @@ function getDataFromAPI(reqs) {
         <div id="annotatedRequirements">
         </div>
         <hr>
-        <hr>
-        <h2>Ambiguities descriptions</h2>
-        <div id="row-ambiguity-result" class="row">
-            <div id="legend1" class="col-xs-12 col-md-6"></div>
-            <div id="legend2" class="col-xs-12 col-md-6"></div>
+        <div style="visibility: visible" >
+            <h2>Ambiguities descriptions</h2>
+            <div id="row-ambiguity-result" class="row">
+                <div id="legend1" class="col-xs-12 col-md-6"></div>
+                <div id="legend2" class="col-xs-12 col-md-6"></div>
+            </div>
         </div>
         </div>
     `);
@@ -138,6 +139,9 @@ function processResponse(reqs, response) {
 
     showAmbiguityCounts(ambStats);
     showLegend(ambStats);
+
+    // add tippy tooltip script
+    addTippyScript();
 }
 
 function indexCharacters(reqIndex, lineIndex, text) {
@@ -210,7 +214,7 @@ function highlightCharacters(lineIndex, ambiguities) {
 
         // wrap all mark elements into a div
         let content = ambiguityData["title"];
-        let divInfo = `<div style="display:contents" title="${content}">
+        let divInfo = `<div class="tippy-tooltip" id="tooltip_${lineIndex}_${ambIndexStart}" style="display:contents" data-template="${content}">
                             </div>`
         $(`mark[id^="charID_${lineIndex}_"`).slice(ambIndexStart,ambIndexEnd).wrapAll(divInfo)
 
@@ -278,9 +282,11 @@ function showLegend(ambStats) {
         let color = colorChoices[title];
         let description = ambiguityData["description"];
         let htmlElement = `
+            <div id="${title}">
             <div style="background-color:${color}" class="box"></div>
             <div class="explanationTitle" style="background-color:${color}">${title}</div>
             <div class="explanation">${description}</div>
+            </div>
             <br>`;
         legend.append(htmlElement);
     });
@@ -307,6 +313,24 @@ function showAmbiguityCounts(ambStats) {
 
     // Add HTML to page
     //$('#ambiguity-counts').html(htmlText);
+}
+
+function addTippyScript() {
+    $("#body").append(`<script >
+                    tippy('.tippy-tooltip', {
+                   content(reference) {
+                    const id = reference.getAttribute('data-template');
+                    if (id) {
+                        const template = document.getElementById(id);
+                        return template.innerHTML;
+                    }
+                    return null;
+                },
+                allowHTML: true,
+                followCursor: true,
+                 theme: 'customblack',
+            });
+            </script>`);
 }
 
 
