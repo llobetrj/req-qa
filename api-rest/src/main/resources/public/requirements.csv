@@ -1,0 +1,13 @@
+The absolute time of input will be associated with each sensed data item for its complete lifecycle, including permanent storage.
+If the user does not confirm the request to relay the modified parameters to the diagnostic processing immediately, it will not be performed.
+The migration strategy must select a storage medium, taking into consideration the expected and actual rates of errors encountered in various media types, their performance, and their costs of ownership.
+7.5.1 The Monitor Designated Community function interacts with archive Consumers and Producers to track changes in their service requirements and available product technologies.
+F-165 The Clarus system shall be able to base its quality control process on values from multiple observations.
+F-213G1 The DOG shall be able to monitor new environmental data services as they are added.
+P-011 The Clarus system shall be able to publish environmental data at three times the volume rate that it collects it.
+Any change in device state shall be reported on the screen not later than 2 seconds from the time it occurs.
+5.4.4 Upon registration, the mobile shall be accessible by calling the MSISDN or the Engine or Coach number with which it is associated.
+The scheduler shall give tasks priority values according to their rate - the higher the rate, the higher the priority.
+All tasks in rate groups and their corresponding schedules for all vehicle modes will be setup at system initialization.
+If the broadcast option is used, each virtual group should open the pipe and read from it to avoid flow control problems.
+When a majority, but not a unanimity, of FCP members are observed with packets in their output buffers, a time-out shall (3.2.2.6.7) be initiated.
