@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Req-qa</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./script.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./styles.css">
+
+    <script type="text/javascript" src="js/bootstrap-filestyle.min.js"> </script>
+
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/tippy.js@6/animations/scale.css"
+    />
+    <style>
+        .tippy-box[data-theme~='customblack'] {
+            color:black;
+            background-color: #F8F8F6FF;
+        }
+    </style>
+</head>
+<body id="body">
+    <h1>Select a CSV file to analyze</h1>
+
+    <form enctype="multipart/form-data">
+        <input id="upload" type=file accept=".csv" name="files"
+               class="filestyle"
+               data-classButton="btn btn-primary"
+               data-btnClass="btn btn-primary"
+               data-placeholder="No file"
+               data-buttonBefore="true"
+               data-buttonText="Select a file">
+    </form>
+    <div id="ambiguity-counts" class="col-xs-12">
+    </div>
+
+    <!-- Tippy tooltip -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.find,Promise,Object.assign"></script>
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+</body>
+</html>

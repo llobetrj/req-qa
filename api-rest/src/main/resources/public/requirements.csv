@@ -1,0 +1,9 @@
+The absolute time of input will be associated with each sensed data item for its complete lifecycle, including permanent storage.
+If the user does not confirm the request to relay the modified parameters to the diagnostic processing immediately, it will not be performed.
+The migration strategy must select a storage medium, taking into consideration the expected and actual rates of errors encountered in various media types, their performance, and their costs of ownership.
+7.5.1 The Monitor Designated Community function interacts with archive Consumers and Producers to track changes in their service requirements and available product technologies.
+F-165 The Clarus system shall be able to base its quality control process on values from multiple observations.
+F-213G1 The DOG shall be able to monitor new environmental data services as they are added.
+P-011 The Clarus system shall be able to publish environmental data at three times the volume rate that it collects it.
+Any change in device state shall be reported on the screen not later than 2 seconds from the time it occurs.
+5.4.4 Upon registration, the mobile shall be accessible by calling the MSISDN or the Engine or Coach number with which it is associated.
