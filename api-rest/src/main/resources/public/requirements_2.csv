@@ -1,0 +1,4 @@
+The scheduler shall give tasks priority values according to their rate - the higher the rate, the higher the priority.
+All tasks in rate groups and their corresponding schedules for all vehicle modes will be setup at system initialization.
+If the broadcast option is used, each virtual group should open the pipe and read from it to avoid flow control problems.
+When a majority, but not a unanimity, of FCP members are observed with packets in their output buffers, a time-out shall (3.2.2.6.7) be initiated.

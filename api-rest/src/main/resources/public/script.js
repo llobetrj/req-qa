@@ -137,7 +137,7 @@ function processResponse(reqs, response) {
     });
 
 
-    showAmbiguityCounts(ambStats);
+    //showAmbiguityCounts(ambStats);
     showLegend(ambStats);
 
     // add tippy tooltip script
@@ -312,7 +312,7 @@ function showAmbiguityCounts(ambStats) {
         '<br/>&nbsp&nbsp&nbsp&nbsp Hidden Ambiguities  : ' + (totalAmbCount-visibleAmbCount);
 
     // Add HTML to page
-    //$('#ambiguity-counts').html(htmlText);
+    $('#ambiguity-counts').html(htmlText);
 }
 
 function addTippyScript() {
