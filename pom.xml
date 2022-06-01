@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>edu.upc.fib</groupId>
 	<artifactId>tfg</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>req-qa</name>
