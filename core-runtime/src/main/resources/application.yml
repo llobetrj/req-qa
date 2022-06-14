@@ -40,10 +40,10 @@ management:
 
 taiga:
   baseUrl: "http://localhost:9000"
-  secret: "4002357aa9e2d26e83228b09cd050af84787e5e7"
+  secret: "TO_BE_DEFINED"
   customFieldName: "quality"
-  username: "admin"
-  password: "admin"
+  username: "TO_BE_DEFINED"
+  password: "TO_BE_DEFINED"
   granType: "password"
 
 openreq:
